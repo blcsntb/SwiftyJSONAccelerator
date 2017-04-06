@@ -47,7 +47,7 @@ public struct ModelGenerator {
    */
     func generateModelForJSON(_ object: JSON, _ defaultClassName: String, _ isTopLevelObject: Bool) -> [ModelFile] {
 
-        let className = NameGenerator.fixClassName(defaultClassName, self.configuration.prefix, isTopLevelObject)
+        let className = NameGenerator.fixClassName(defaultClassName, "", isTopLevelObject)
         var modelFiles: [ModelFile] = []
 
         // Incase the object was NOT a dictionary. (this would only happen in case of the top level

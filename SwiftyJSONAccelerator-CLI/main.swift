@@ -22,9 +22,14 @@ CLI.registerChainableCommand(name: "generate")
             let generatedModelInfo = try MultipleModelGenerator.generate(forPath: path)
             for file in generatedModelInfo.modelFiles {
                 let content = FileGenerator.generateFileContentWith(file, configuration: generatedModelInfo.configuration)
-                let name = file.fileName
+                var name = file.fileName
+                var path = generatedModelInfo.configuration.filePath
+                if let prefix = generatedModelInfo.configuration.prefix {
+                    name = prefix + name
+                    path += prefix + "/"
+                }
                 print(" ✓   " + name)
-                try FileGenerator.writeToFileWith(name, content: content, path: generatedModelInfo.configuration.filePath)
+                try FileGenerator.writeToFileWith(name, content: content, path: path)
             }
             print("✓ Generation Complete - \(generatedModelInfo.modelFiles.count) files at \(generatedModelInfo.configuration.filePath)")
         } catch let error as MultipleModelGeneratorError {
